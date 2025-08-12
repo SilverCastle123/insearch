@@ -52,12 +52,12 @@
 				    <div class="alert alert-info small mb-3">
 				    	※ 설문지 제목을 입력해주세요.
 				    </div>
-					<input type="text" class="form-control mb-3" placeholder="설문지 제목 작성.." id="searchText">
+					<input type="text" class="form-control mb-3" placeholder="예) 설문조사 시스템 서비스 만족도 조사" id="searchText">
 					
 					<div class="alert alert-info small mb-3">
 				    	※ 설문 목적이나 참여 방법 등을 간단히 안내하는 인사말을 작성해 주세요.
 				    </div>
-					<textarea class="form-control mb-3" rows="5" cols="" placeholder="인사말 작성.."></textarea>
+					<textarea class="form-control mb-3" rows="5" cols="" placeholder="예) 서비스 개선을 위해 고객님의 소중한 의견을 듣고자 합니다. (소요 시간: 약 3분)"></textarea>
 					
 					<div class="alert alert-info small mb-3">
 					    ※ 설문 시작일을 선택해 주세요.
@@ -107,7 +107,7 @@
 				    <div class="alert alert-info small mb-3">
 				    	※ 응답자에게 마지막으로 전달할 감사 메시지를 입력해 주세요.
 				    </div>
-      				<textarea class="form-control" rows="5" id="closingMessage" placeholder="맺음말 작성.."></textarea>
+      				<textarea class="form-control" rows="5" id="closingMessage" placeholder="예) 설문에 응답해 주셔서 진심으로 감사드립니다.&#10;모든 의견은 제품 개선에 소중히 반영하겠습니다."></textarea>
 	  			</div>
 				<div class="saveBtn" id="saveSurveyWrap">
 					<button class="btn btn-secondary prev-btn mt-3" data-target=".question">이전</button>
