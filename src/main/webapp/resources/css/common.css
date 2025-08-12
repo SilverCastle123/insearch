@@ -1,0 +1,172 @@
+@charset "UTF-8";
+
+html, body {
+	height: 100%;
+	margin: 0;
+}
+
+.wrapper {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+
+.content {
+	flex: 1;
+	margin: 20px;
+}
+
+/* 공통 카드 스타일 */
+.card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    padding: 24px;
+    margin: 20px;
+    width: auto;
+}
+
+/* 우측 고정 컨트롤러 공통 스타일 */
+.ctrl-panel {
+	position: absolute;
+	top: 100px;
+	right: 32px;
+	transition: transform 0.2s ease-out;
+	will-change: transform;
+	width: 300px;
+	z-index: 1000;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+	padding: 10px;
+}
+
+.addQuestionBtn {
+  transition: transform 0.1s ease;
+}
+
+.addQuestionBtn:active {
+  transform: scale(0.95);
+}
+
+.addQuestionBtn:hover {
+  opacity: 0.8;
+}
+
+
+/* 공통 버튼 스타일 */
+.init-btn {
+    height: 38px;
+    width: auto;
+    padding: 15px;
+    margin-right: 5px;
+    background: #f4f4f4;
+    border: #d6d6d6 solid 1px;
+    border-radius: 20px;
+    display: inline-flex;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s;
+}
+   
+.init-btn:hover {
+    background-color: #fff;
+}
+
+.init-btn:active {
+    transform: scale(0.95);
+}
+
+.init-btn:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* 회사 로고기반 파란색 테마 */
+.init-btn.logo {
+	background-color: #1565c0;
+  	border-color: #1565c0;
+  	color: #fff;
+}
+
+.init-btn.logo:hover {
+	background-color: #0d47a1;
+	border-color: #0d47a1;
+	color: #fff;
+}
+
+.init-btn.logo:active {
+	transform: scale(0.95);
+}
+
+.init-btn.logo:disabled {
+	background-color: #cfd8dc;
+	border-color: #b0bec5;
+	color: #666;
+	opacity: 0.6;
+	cursor: not-allowed;
+}
+
+
+/* 현위치 네이게이션 스타일 */
+.init-nav ol {
+	list-style: none;
+	display: flex;
+	align-items: center;
+	font-size: 14px;
+	color: #555;
+	padding: 0;
+	margin: 0;
+}
+
+.init-nav li {
+	display: flex;
+	align-items: center;
+}
+
+
+.init-nav li + li::before {
+	content: "›";
+	padding: 0 8px;
+	color: #999;
+	font-size: 14px;
+}
+
+.init-nav ol > li > a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.init-nav a:hover {
+	text-decoration: underline;
+}
+
+.init-nav strong {
+	color: #000;
+	font-weight: 600;
+}
+
+/* 아이콘 사용한 버튼 CSS */
+.icon-btn {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  margin-left: 10px;
+  vertical-align: middle;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.icon-btn {
+  transition: transform 0.1s ease;
+}
+
+.icon-btn:active {
+  transform: scale(0.9);
+}
+
