@@ -1,11 +1,13 @@
 package com.init.survey.controller;
 
+import com.init.survey.dto.SurveyResponseExcelDTO;
 import com.init.survey.entity.Choice;
 import com.init.survey.entity.GridCategory;
 import com.init.survey.entity.Question;
 import com.init.survey.entity.ResponseItem;
 import com.init.survey.entity.Survey;
 import com.init.survey.entity.SurveyResponse;
+import com.init.survey.service.SurveyExcelService;
 import com.init.survey.service.SurveyResponseService;
 import com.init.survey.service.SurveyService;
 
@@ -22,6 +24,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.stream.Collectors;
 import java.util.Comparator;
 import java.util.List;
@@ -33,6 +37,7 @@ public class SurveyResponseController {
 
     private final SurveyService surveyService;
     private final SurveyResponseService surveyResponseService;
+    private final SurveyExcelService surveyExcelService;
 
     @GetMapping("/response.do")
     public String showResponseForm(@RequestParam("id") Long id, Model model) {
@@ -56,46 +61,35 @@ public class SurveyResponseController {
     
     @GetMapping("/survey/{surveyId}/responses/excel")
     public void downloadSurveyResponsesExcel(@PathVariable Long surveyId, HttpServletResponse response) throws IOException {
-    	Survey survey = surveyService.findSurveyWithQuestions(surveyId);
-    	
-    	List<SurveyResponse> responses = surveyResponseService.getResponsesBySurveyId(surveyId);
-
-        Workbook workbook = new XSSFWorkbook();
-        Sheet sheet = workbook.createSheet("응답 결과");
-
-        int rowNum = 0;
-        Row header = sheet.createRow(rowNum++);
-        header.createCell(0).setCellValue("응답자 순번");
-        header.createCell(1).setCellValue("응답 ID");
-        header.createCell(2).setCellValue("제출 시간");
-        header.createCell(3).setCellValue("질문 ID");
-        header.createCell(4).setCellValue("카테고리 순서");
-        header.createCell(5).setCellValue("응답 내용");
-
-        int index = 1; // 응답자 번호
-        for (SurveyResponse sr : responses) {
-            for (ResponseItem item : sr.getResponseItems()) {
-                Row row = sheet.createRow(rowNum++);
-                row.createCell(0).setCellValue(index);
-                row.createCell(1).setCellValue(sr.getId());
-                row.createCell(2).setCellValue(sr.getSubmittedAt().toString());
-                row.createCell(3).setCellValue(item.getQuestionId());
-                row.createCell(4).setCellValue(item.getCategoryOrder() != null ? item.getCategoryOrder() : -1);
-                row.createCell(5).setCellValue(item.getAnswer());
-            }
-            index++;
-        }
-        
-        // 파일명에 설문 제목 포함 (공백, 특수문자 제거)
-        String fileName = survey.getTitle().replaceAll("[\\\\/:*?\"<>|\\s]", "_");
-        String encodedFileName = java.net.URLEncoder.encode(fileName, "UTF-8");
+        List<SurveyResponseExcelDTO> excelData = surveyExcelService.getExcelData(surveyId);
 
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-        response.setHeader("Content-Disposition", "attachment; filename=" + encodedFileName + "_responses.xlsx");
+        String fileName = URLEncoder.encode("survey_response.xlsx", "UTF-8");
+        response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
 
-        workbook.write(response.getOutputStream());
-        workbook.close();
+        try (Workbook workbook = new XSSFWorkbook()) {
+            Sheet sheet = workbook.createSheet("Survey Responses");
+
+            Row headerRow = sheet.createRow(0);
+            String[] headers = {"설문 제목", "문항 순서", "문항 내용", "응답자", "응답"};
+            for (int i = 0; i < headers.length; i++) {
+                headerRow.createCell(i).setCellValue(headers[i]);
+            }
+
+            int rowNum = 1;
+            for (SurveyResponseExcelDTO dto : excelData) {
+                Row row = sheet.createRow(rowNum++);
+                row.createCell(0).setCellValue(dto.getSurveyTitle());
+                row.createCell(1).setCellValue(dto.getQuestionOrder());
+                row.createCell(2).setCellValue(dto.getQuestionContent());
+                row.createCell(3).setCellValue(dto.getRespondent());
+                row.createCell(4).setCellValue(dto.getAnswer());  // 이미 파싱된 값
+            }
+
+            workbook.write(response.getOutputStream());
+        }
     }
+    
 
 
 }

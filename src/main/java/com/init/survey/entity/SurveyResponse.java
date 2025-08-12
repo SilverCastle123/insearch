@@ -21,9 +21,16 @@ public class SurveyResponse {
     @SequenceGenerator(name = "response_seq_gen", sequenceName = "RESPONSE_SEQ", allocationSize = 1)
     private Long id;
 
+    @Column(name = "survey_id")
     private Long surveyId;
 
     private LocalDateTime submittedAt;
+    
+    private String respondentName;  
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "survey_id", insertable = false, updatable = false)
+    private Survey survey;
 
     @OneToMany(mappedBy = "surveyResponse", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ResponseItem> responseItems = new ArrayList<>();

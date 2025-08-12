@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -33,8 +34,11 @@ public class Survey {
     @Column(name = "CLOSING_DATE")
     private LocalDate closingDate;
 
-    private LocalDateTime createdAt;
+    private LocalDate createdAt;
 
     @OneToMany(mappedBy = "survey", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Question> questions = new HashSet<>();
+    
+    @OneToMany(mappedBy = "survey", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SurveyResponse> surveyResponses = new ArrayList<>();
 }

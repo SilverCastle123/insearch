@@ -60,6 +60,11 @@
 					<textarea class="form-control mb-3" rows="5" cols="" placeholder="인사말 작성.."></textarea>
 					
 					<div class="alert alert-info small mb-3">
+					    ※ 설문 시작일을 선택해 주세요.
+					</div>
+					<input type="date" class="form-control mb-3" id="createdAt">
+					
+					<div class="alert alert-info small mb-3">
 				        ※ 설문지 마감일을 선택해 주세요.
 				    </div>
 				    <input type="date" class="form-control mb-3" id="closingDate">

@@ -4,6 +4,7 @@ let questionNum = 0; // 문항 번호 매기는용 변수
 
 function initSurveyApp() {
 	bindTopNav(); 				// 상단 네비 호출
+	dateSettings(); 				// 날짜설정
 	bindCreateQuestion(); 		// 문항 추가 호출
 	deleteQuestion();			// 문항 삭제 호출
 	bindDragEvent();			// 드래그 이벤트 호출
@@ -82,6 +83,43 @@ function bindTopNav() {
       showSection(targetClass);
     });
   });
+}
+
+function dateSettings() {
+
+    // 오늘 날짜를 yyyy-MM-dd 형식으로 변환
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    const formattedDate = `${year}-${month}-${day}`;
+
+    const createdAtInput = document.getElementById("createdAt");
+    const closingDateInput = document.getElementById("closingDate");
+
+    // 시작일 기본값 = 오늘
+    if (createdAtInput) {
+        createdAtInput.value = formattedDate;
+        createdAtInput.min = formattedDate;
+    }
+
+    // 시작일 변경 시 마감일 최소값 변경
+    if (createdAtInput && closingDateInput) {
+        createdAtInput.addEventListener("change", function () {
+            if (closingDateInput.value && closingDateInput.value < createdAtInput.value) {
+                closingDateInput.value = createdAtInput.value;
+            }
+            closingDateInput.min = createdAtInput.value;
+        });
+
+        // 마감일이 선택되었을 때만 유효성 검사
+        closingDateInput.addEventListener("change", function () {
+            if (closingDateInput.value && closingDateInput.value < createdAtInput.value) {
+                alert("마감일은 시작일보다 빠를 수 없습니다.");
+                closingDateInput.value = createdAtInput.value;
+            }
+        });
+	}
 }
 
 
@@ -615,7 +653,6 @@ function bindPreviewBtn() {
       // 기본정보(제목, 인사말, 마감일) 가져오기
       const title = document.getElementById("searchText")?.value || "";
       const greeting = document.querySelector(".basicInf textarea")?.value || "";
-      const closingDate = document.getElementById("closingDate")?.value || "";
 
       // 기본정보 섹션 생성 및 추가
       const infoSection = document.createElement("div");
@@ -623,7 +660,6 @@ function bindPreviewBtn() {
         <h5 class="fw-bold">기본정보</h5>
         <p><strong>제목:</strong> ${title}</p>
         <p><strong>인사말:</strong> ${greeting.replace(/\n/g, "<br>")}</p>
-        <p><strong>마감일:</strong> ${closingDate}</p>
         <hr />
       `;
       previewContent.appendChild(infoSection);
@@ -728,6 +764,7 @@ document.querySelectorAll(".saveSurveyBtn").forEach(function (btn) {
   const title = document.getElementById("searchText").value.trim();
   const description = document.querySelector(".basicInf textarea").value.trim();
   const closingMessage = document.getElementById("closingMessage").value.trim();
+  const createdAt = document.getElementById("createdAt").value;
   const closingDate = document.getElementById("closingDate").value;
   console.log("title:", title, "description:", description,"closingDate",closingDate);
 
@@ -811,6 +848,7 @@ const data = {
   title: title,
   description: description,
   closingMessage: closingMessage,
+  createdAt: createdAt,
   closingDate: closingDate,
   questions: questions
 };

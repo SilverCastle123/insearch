@@ -46,6 +46,9 @@ public class Question {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<GridCategory> gridCategories = new HashSet<>();
     
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ResponseItem> responseItems = new ArrayList<>();
+    
     
     // 정렬된 Choice 리스트 반환
     public List<Choice> getSortedChoiceList() {

@@ -22,7 +22,7 @@ public class SurveyDTO {
     private String description;
     private String closingMessage;
     private LocalDate closingDate;
-    private LocalDateTime createdAt;
+    private LocalDate createdAt;
     private List<QuestionDTO> questions;
     
     
@@ -47,6 +47,11 @@ public class SurveyDTO {
         return createdAt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
     
+    public String getCreatedAtStr() {
+        return createdAt != null
+            ? createdAt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+            : "";
+    }
 
 
     public String getClosingDateStr() {

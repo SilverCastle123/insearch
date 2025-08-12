@@ -5,7 +5,6 @@
 	
 	String surveyTitle = request.getAttribute("surveyTitle") != null ? (String)request.getAttribute("surveyTitle") : "";
 	String description = request.getAttribute("description") != null ? (String)request.getAttribute("description") : "";
-	String closingDate = request.getAttribute("closingDate") != null ? (String)request.getAttribute("closingDate") : "";
 	String closingMessage = request.getAttribute("closingMessage") != null ? (String)request.getAttribute("closingMessage") : "";
 
 %>
@@ -71,9 +70,14 @@
 					<textarea class="form-control mb-3" id="greetingText" rows="5" placeholder="인사말 작성.."><%= description %></textarea>
 					
 					<div class="alert alert-info small mb-3">
+				        ※  설문 시작일을 선택해 주세요.
+				    </div>
+				    <input type="date" class="form-control mb-3" id="createdAt" value="${survey.createdAtStr}">
+					
+					<div class="alert alert-info small mb-3">
 				        ※ 설문지 마감일을 선택해 주세요.
 				    </div>
-				    <input type="date" class="form-control mb-3" id="closingDate" value="<%= closingDate %>">
+				    <input type="date" class="form-control mb-3" id="closingDate" value="${survey.closingDateStr}">
 				</div>
 				<div class="d-flex justify-content-end mt-3">
 					<button type="button" class="btn btn-primary mt-3 saveBtn">수정 저장</button>

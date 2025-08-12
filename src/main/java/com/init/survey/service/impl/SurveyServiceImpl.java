@@ -65,7 +65,7 @@ public class SurveyServiceImpl implements SurveyService {
                 .title(dto.getTitle())
                 .description(dto.getDescription())
                 .closingMessage(dto.getClosingMessage())
-                .createdAt(LocalDateTime.now())
+                .createdAt(dto.getCreatedAt())
                 .build();
         return convertToDTO(surveyRepository.save(survey));
     }
@@ -97,7 +97,7 @@ public class SurveyServiceImpl implements SurveyService {
                 .description(request.getDescription())
                 .closingMessage(request.getClosingMessage())
                 .closingDate(request.getClosingDate())
-                .createdAt(LocalDateTime.now())
+                .createdAt(request.getCreatedAt())
                 .build();
 
         Set<Question> questions = request.getQuestions().stream()
@@ -190,6 +190,7 @@ public class SurveyServiceImpl implements SurveyService {
         existingSurvey.setTitle(request.getTitle());
         existingSurvey.setDescription(request.getDescription());
         existingSurvey.setClosingMessage(request.getClosingMessage());
+        existingSurvey.setCreatedAt(request.getCreatedAt());
         existingSurvey.setClosingDate(request.getClosingDate());
 
      

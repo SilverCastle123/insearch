@@ -21,6 +21,8 @@ public class SurveySaveRequest {
 
     private String description;
     
+    private LocalDate createdAt;
+    
     private LocalDate closingDate;
     
     private String closingMessage;

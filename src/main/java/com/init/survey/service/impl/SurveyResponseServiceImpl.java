@@ -51,7 +51,7 @@ public class SurveyResponseServiceImpl implements SurveyResponseService {
                         String val = request.getParameter(paramName);
                         if (val != null) {
                             ResponseItem item = new ResponseItem();
-                            item.setQuestionId(q.getId());
+                            item.setQuestion(q);
                             item.setCategoryOrder(cat.getCategoryOrder());
                             item.setAnswer(val);
                             response.addResponseItem(item);
@@ -62,7 +62,7 @@ public class SurveyResponseServiceImpl implements SurveyResponseService {
                     String val = request.getParameter(paramName);
                     if (val != null && !val.trim().isEmpty()) {
                         ResponseItem item = new ResponseItem();
-                        item.setQuestionId(q.getId());
+                        item.setQuestion(q);
                         item.setAnswer(val);
                         response.addResponseItem(item);
                     }
@@ -77,4 +77,6 @@ public class SurveyResponseServiceImpl implements SurveyResponseService {
     public List<SurveyResponse> getResponsesBySurveyId(Long surveyId) {
         return surveyResponseRepository.findBySurveyIdWithItems(surveyId);
     }
+    
+    
 }
